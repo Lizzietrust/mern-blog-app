@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +18,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
@@ -25,6 +32,7 @@ const Login = () => {
     if (incompleteData) {
       setErrorMsg("Please fill all fields");
     } else {
+      dispatch(signInStart());
       setIsLoading(true);
       try {
         const res = await fetch("/api/auth/signin", {
@@ -39,12 +47,14 @@ const Login = () => {
         console.log({ data });
 
         if (data.success === false) {
+          dispatch(signInFailure(data.message));
           toast.error(data.message);
         }
 
         setIsLoading(false);
 
         if (res.ok) {
+          dispatch(signInSuccess(data));
           navigate("/dashboard");
         }
       } catch (error) {
