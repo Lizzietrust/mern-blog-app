@@ -30,7 +30,7 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="w-1/3 flex items-center gap-5 text-gray-300 px-10">
+        <div className="w-1/3 flex items-center justify-end gap-5 text-gray-300">
           <FaLinkedin className="cursor-pointer" />
           <IoMdMail className="cursor-pointer" />
           <FaTwitter className="cursor-pointer" />
