@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GoogleAuth from "../components/GoogleAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ const Signup = () => {
         background: `url('/bg-image.jpg') no-repeat center center / cover`,
       }}
     >
-      <div className="glass-card w-[500px] h-[570px] border border-slate-200 p-5 rounded-lg">
+      <div className="glass-card w-[500px] h-[650px] border border-slate-200 p-5 rounded-lg">
         <h2
           className={`uppercase font-semibold text-4xl text-center text-white pb-10 ${
             errormsg && "pb-5"
@@ -147,6 +148,8 @@ const Signup = () => {
             {isLoading ? "Loading..." : "submit"}
           </button>
         </form>
+
+        <GoogleAuth />
 
         <div className="text-center text-white pt-5">
           Already have an account?

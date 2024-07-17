@@ -7,6 +7,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import GoogleAuth from "../components/GoogleAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -80,7 +81,7 @@ const Login = () => {
         background: `url('/bg-image.jpg') no-repeat center center / cover`,
       }}
     >
-      <div className="glass-card w-[500px] h-[470px] border border-slate-200 p-5 rounded-lg">
+      <div className="glass-card w-[500px] h-[550px] border border-slate-200 p-5 rounded-lg">
         <h2
           className={`uppercase font-semibold text-4xl text-center text-white pb-10 ${
             errormsg && "pb-5"
@@ -137,6 +138,8 @@ const Login = () => {
             {isLoading ? "Loading..." : "submit"}
           </button>
         </form>
+
+        <GoogleAuth />
 
         <div className="text-center text-white pt-5">
           Don"t have an account?
