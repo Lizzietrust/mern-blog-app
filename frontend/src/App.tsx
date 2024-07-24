@@ -9,6 +9,7 @@ import Nav from "./components/Nav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
       </Routes>

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { DiVim } from "react-icons/di";
 
 const Nav = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -29,9 +28,6 @@ const Nav = () => {
             </Link>
             <Link to="/projects" className="font-medium text-lg text-gray-700">
               Projects
-            </Link>
-            <Link to="/dashboard" className="font-medium text-lg text-gray-700">
-              Dashboard
             </Link>
           </div>
         </div>
