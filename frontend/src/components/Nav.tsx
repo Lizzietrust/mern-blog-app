@@ -75,7 +75,7 @@ const Nav = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div className=" hover:bg-slate-900 py-2">
-              <Link to="/dashboard?tab=profile" className="text-white">
+              <Link to="/profile" className="text-white">
                 Profile
               </Link>
             </div>

@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import DashboardLayout from "./DashboardLayout";
 
 const PrivateRoutes = () => {
   const { currentUser } = useSelector((state) => state.user);
 
-  return currentUser ? <Outlet /> : <Navigate to="/login" />;
+  return currentUser ? <DashboardLayout /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;
