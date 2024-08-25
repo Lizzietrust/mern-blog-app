@@ -6,7 +6,7 @@ interface DashboardLink {
   id: number;
   name: string;
   path: string;
-  icon: IconType; 
+  icon: IconType;
 }
 
 export const dashboardLinks: DashboardLink[] = [
@@ -24,7 +24,7 @@ export const dashboardLinks: DashboardLink[] = [
   },
   {
     id: 3,
-    name: "profile",
+    name: "profile settings",
     path: "/profile",
     icon: AiOutlineProfile,
   },
