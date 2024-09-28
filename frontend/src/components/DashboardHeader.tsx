@@ -1,7 +1,7 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdNotificationsNone } from "react-icons/md";
-import { useSelector, UseSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface DashboardHeaderProps {
   pageTitle: string;
