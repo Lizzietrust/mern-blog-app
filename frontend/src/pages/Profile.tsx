@@ -16,8 +16,12 @@ import {
   updateStart,
   updateSuccess,
   updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import DeleteUserModal from "../components/modals/DeleteUserModal";
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -28,6 +32,8 @@ const Profile = () => {
   );
   const [imageUploadError, setImageUploadError] = useState<string | null>(null);
   const [imageUploading, setImageUploading] = useState<boolean>(false);
+  const [showDeleteUserModal, setShowDeleteUserModal] =
+    useState<boolean>(false);
   const [formData, setFormData] = useState({});
   const fileRef = useRef();
   const dispatch = useDispatch();
@@ -112,20 +118,38 @@ const Profile = () => {
       const data = await res.json();
       if (!res.ok) {
         dispatch(updateFailure(data.message));
-        // setUpdateUserError(data.message);
         toast.error(data.message);
       } else {
         dispatch(updateSuccess(data));
-        // setUpdateUserSuccess("Profile updated successfully");
         toast.success("Profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
-      // setUpdateUserError(error.message);
       toast.error(
         error.message || "Unable to update profile, please try again"
       );
     }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+        toast.error(data.message || "Cannot delete account");
+      } else {
+        dispatch(deleteUserSuccess(data));
+        toast.success("Account deleted successfully");
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+      toast.error(error.message || "Cannot delete account");
+    }
+    setShowDeleteUserModal(false);
   };
 
   return (
@@ -220,7 +244,11 @@ const Profile = () => {
           Save Changes
         </button>
         <div className="flex items-center justify-between w-80 mt-3">
-          <button className="text-red-500 text-sm font-medium" type="button">
+          <button
+            className="text-red-500 text-sm font-medium"
+            type="button"
+            onClick={() => setShowDeleteUserModal(true)}
+          >
             Delete account
           </button>
           <button
@@ -231,6 +259,12 @@ const Profile = () => {
           </button>
         </div>
       </form>
+      {showDeleteUserModal && (
+        <DeleteUserModal
+          setShowDeleteUserModal={setShowDeleteUserModal}
+          handleDeleteAccount={handleDeleteAccount}
+        />
+      )}
     </div>
   );
 };
