@@ -19,6 +19,7 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signoutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import DeleteUserModal from "../components/modals/DeleteUserModal";
@@ -152,6 +153,25 @@ const Profile = () => {
     setShowDeleteUserModal(false);
   };
 
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        toast.error(data.message || "Unable to signout");
+      } else {
+        dispatch(signoutSuccess());
+        toast.success("User signed out successfully");
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message || "Unable to signout");
+    }
+  };
+
   return (
     <div className="">
       <DashboardHeader pageTitle="profile settings" />
@@ -254,6 +274,7 @@ const Profile = () => {
           <button
             className="bg-red-500 text-slate-200 px-4 py-2 text-sm font-medium rounded-lg"
             type="button"
+            onClick={handleSignout}
           >
             Sign out
           </button>

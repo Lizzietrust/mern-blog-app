@@ -1,9 +1,32 @@
 import { Link, useLocation } from "react-router-dom";
 import { dashboardLinks } from "../constants";
 import { FaSignOutAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { signoutSuccess } from "../redux/user/userSlice";
 
 const Sidebar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        toast.error(data.message || "Unable to signout");
+      } else {
+        dispatch(signoutSuccess());
+        toast.success("User signed out successfully");
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message || "Unable to signout");
+    }
+  };
 
   return (
     <div className="w-full h-full overflow-y-auto bg-slate-950 py-5 flex flex-col">
@@ -33,7 +56,9 @@ const Sidebar = () => {
           className={`flex items-center gap-3 w-full h-10 rounded-lg text-red-500 px-5 hover:font-bold`}
         >
           <FaSignOutAlt className="text-lg" />
-          <span className="capitalize">Sign out</span>
+          <span className="capitalize" onClick={handleSignout}>
+            Sign out
+          </span>
         </button>
       </div>
     </div>
